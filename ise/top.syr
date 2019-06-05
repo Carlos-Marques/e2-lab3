@@ -1,0 +1,929 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Reading design: top.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "top.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "top"
+Output Format                      : NGC
+Target Device                      : xc3s100e-4-cp132
+
+---- Source Options
+Top Module Name                    : top
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "fir_tap.v" in library work
+Compiling verilog file "freq_synt.v" in library work
+Module <fir_tap> compiled
+Compiling verilog file "fir_path.v" in library work
+Module <freq_synt> compiled
+Compiling verilog file "detector.v" in library work
+Module <fir_path> compiled
+Compiling verilog file "top.v" in library work
+Module <detector> compiled
+Module <top> compiled
+No errors in compilation
+Analysis of file <"top.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <top> in library <work> with parameters.
+	FS = "00000000000000001110001010010000"
+	N = "00000000000000000000000000001010"
+
+Analyzing hierarchy for module <freq_synt> in library <work>.
+
+Analyzing hierarchy for module <fir_path> in library <work> with parameters.
+	N = "00000000000000000000000000001010"
+
+Analyzing hierarchy for module <detector> in library <work>.
+
+Analyzing hierarchy for module <fir_tap> in library <work>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <top>.
+	FS = 32'sb00000000000000001110001010010000
+	N = 32'sb00000000000000000000000000001010
+"top.v" line 40: $display : top N =         10
+"top.v" line 41: $display : top FS =      58000
+Module <top> is correct for synthesis.
+ 
+Analyzing module <freq_synt> in library <work>.
+Module <freq_synt> is correct for synthesis.
+ 
+Analyzing module <fir_path> in library <work>.
+	N = 32'sb00000000000000000000000000001010
+"fir_path.v" line 27: $display : fir_path N =         10
+INFO:Xst:2546 - "fir_path.v" line 28: reading initialization file "h.hex".
+WARNING:Xst:2326 - "fir_path.v" line 29: Invalid escape sequence : %x.
+"fir_path.v" line 29: $display : h[0] = %x 260
+Module <fir_path> is correct for synthesis.
+ 
+Analyzing module <fir_tap> in library <work>.
+Module <fir_tap> is correct for synthesis.
+ 
+Analyzing module <detector> in library <work>.
+Module <detector> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <freq_synt>.
+    Related source file is "freq_synt.v".
+    Found 16x16-bit ROM for signal <count_limit>.
+    Found 18-bit subtractor for signal <$sub0000> created at line 49.
+    Found 16-bit up counter for signal <count>.
+    Found 18-bit comparator equal for signal <count$cmp_eq0000> created at line 49.
+    Found 16-bit comparator lessequal for signal <osc$cmp_le0000> created at line 54.
+    Summary:
+	inferred   1 ROM(s).
+	inferred   1 Counter(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+Unit <freq_synt> synthesized.
+
+
+Synthesizing Unit <detector>.
+    Related source file is "detector.v".
+    Found 17-bit comparator greatequal for signal <detected$cmp_ge0000> created at line 15.
+    Found 32-bit comparator lessequal for signal <detected$cmp_le0000> created at line 15.
+    Summary:
+	inferred   2 Comparator(s).
+Unit <detector> synthesized.
+
+
+Synthesizing Unit <fir_tap>.
+    Related source file is "fir_tap.v".
+WARNING:Xst:646 - Signal <prod<31:28>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <prod<11:0>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 16-bit register for signal <x_out>.
+    Found 16-bit adder for signal <y_out>.
+    Found 16x16-bit multiplier for signal <prod>.
+    Summary:
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   1 Multiplier(s).
+Unit <fir_tap> synthesized.
+
+
+Synthesizing Unit <fir_path>.
+    Related source file is "fir_path.v".
+WARNING:Xst:646 - Signal <x_l<10>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <prod<31:28>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <prod<11:0>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1781 - Signal <h> is used but never assigned. Tied to default value.
+    Found 16x16-bit multiplier for signal <prod>.
+    Summary:
+	inferred   1 Multiplier(s).
+Unit <fir_path> synthesized.
+
+
+Synthesizing Unit <top>.
+    Related source file is "top.v".
+    Found 11-bit up counter for signal <count>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <top> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 16x16-bit ROM                                         : 1
+# Multipliers                                          : 11
+ 16x16-bit multiplier                                  : 11
+# Adders/Subtractors                                   : 11
+ 16-bit adder                                          : 10
+ 18-bit subtractor                                     : 1
+# Counters                                             : 2
+ 11-bit up counter                                     : 1
+ 16-bit up counter                                     : 1
+# Registers                                            : 10
+ 16-bit register                                       : 10
+# Comparators                                          : 4
+ 16-bit comparator lessequal                           : 1
+ 17-bit comparator greatequal                          : 1
+ 18-bit comparator equal                               : 1
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[6].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[5].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[9].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[8].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[7].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[1].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[0].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[4].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_5> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_4> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_3> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_2> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_1> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_0> (without init value) has a constant value of 0 in block <fir_path[3].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_11> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_10> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_9> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_8> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_7> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <x_out_6> (without init value) has a constant value of 0 in block <fir_path[2].U>. This FF/Latch will be trimmed during the optimization process.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 1
+ 16x16-bit ROM                                         : 1
+# Multipliers                                          : 11
+ 16x16-bit multiplier                                  : 11
+# Adders/Subtractors                                   : 11
+ 16-bit adder                                          : 10
+ 18-bit subtractor                                     : 1
+# Counters                                             : 2
+ 11-bit up counter                                     : 1
+ 16-bit up counter                                     : 1
+# Registers                                            : 160
+ Flip-Flops                                            : 160
+# Comparators                                          : 4
+ 16-bit comparator lessequal                           : 1
+ 17-bit comparator greatequal                          : 1
+ 18-bit comparator equal                               : 1
+ 32-bit comparator lessequal                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <top> ...
+
+Optimizing unit <fir_tap> ...
+
+Optimizing unit <fir_path> ...
+WARNING:Xst:1710 - FF/Latch <fir0/fir_path[0].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[0].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[1].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[2].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[3].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[4].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[5].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[6].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[7].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[8].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_11> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_10> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_9> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_8> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_7> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_6> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_5> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_4> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_3> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_2> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_1> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <fir0/fir_path[9].U/x_out_0> (without init value) has a constant value of 0 in block <top>. This FF/Latch will be trimmed during the optimization process.
+
+Mapping all equations...
+Building and optimizing final netlist ...
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[0].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[0].U/x_out_14> <fir0/fir_path[0].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[1].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[1].U/x_out_14> <fir0/fir_path[1].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[2].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[2].U/x_out_14> <fir0/fir_path[2].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[3].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[3].U/x_out_14> <fir0/fir_path[3].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[4].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[4].U/x_out_14> <fir0/fir_path[4].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[5].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[5].U/x_out_14> <fir0/fir_path[5].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[6].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[6].U/x_out_14> <fir0/fir_path[6].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[7].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[7].U/x_out_14> <fir0/fir_path[7].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[8].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[8].U/x_out_14> <fir0/fir_path[8].U/x_out_15> 
+INFO:Xst:2261 - The FF/Latch <fir0/fir_path[9].U/x_out_13> in Unit <top> is equivalent to the following 2 FFs/Latches, which will be removed : <fir0/fir_path[9].U/x_out_14> <fir0/fir_path[9].U/x_out_15> 
+Found area constraint ratio of 100 (+ 5) on block top, actual ratio is 59.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 47
+ Flip-Flops                                            : 47
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : top.ngr
+Top Level Output File Name         : top
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 9
+
+Cell Usage :
+# BELS                             : 2732
+#      GND                         : 1
+#      INV                         : 140
+#      LUT1                        : 392
+#      LUT2                        : 292
+#      LUT3                        : 32
+#      LUT4                        : 44
+#      LUT4_D                      : 2
+#      LUT4_L                      : 1
+#      MULT_AND                    : 1
+#      MUXCY                       : 807
+#      VCC                         : 1
+#      XORCY                       : 1019
+# FlipFlops/Latches                : 47
+#      FDC                         : 27
+#      FDCE                        : 20
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 8
+#      IBUF                        : 5
+#      OBUF                        : 3
+# MULTs                            : 1
+#      MULT18X18SIO                : 1
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s100ecp132-4 
+
+ Number of Slices:                      514  out of    960    53%  
+ Number of Slice Flip Flops:             47  out of   1920     2%  
+ Number of 4 input LUTs:                903  out of   1920    47%  
+ Number of IOs:                           9
+ Number of bonded IOBs:                   9  out of     83    10%  
+ Number of MULT18X18SIOs:                 1  out of      4    25%  
+ Number of GCLKs:                         1  out of     24     4%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 47    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+-----------------------------------+------------------------+-------+
+Control Signal                     | Buffer(FF name)        | Load  |
+-----------------------------------+------------------------+-------+
+rst                                | IBUF                   | 47    |
+-----------------------------------+------------------------+-------+
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.389ns (Maximum Frequency: 135.336MHz)
+   Minimum input arrival time before clock: 11.867ns
+   Maximum output required time after clock: 44.127ns
+   Maximum combinational path delay: 45.151ns
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 7.389ns (frequency: 135.336MHz)
+  Total number of paths / destination ports: 3009 / 66
+-------------------------------------------------------------------------
+Delay:               7.389ns (Levels of Logic = 27)
+  Source:            fsynt0/count_1 (FF)
+  Destination:       fsynt0/count_15 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: fsynt0/count_1 to fsynt0/count_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              3   0.591   0.566  fsynt0/count_1 (fsynt0/count_1)
+     LUT4:I2->O            1   0.704   0.000  fsynt0/Mcompar_count_cmp_eq0000_lut<0> (fsynt0/Mcompar_count_cmp_eq0000_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<0> (fsynt0/Mcompar_count_cmp_eq0000_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<1> (fsynt0/Mcompar_count_cmp_eq0000_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<2> (fsynt0/Mcompar_count_cmp_eq0000_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<3> (fsynt0/Mcompar_count_cmp_eq0000_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<4> (fsynt0/Mcompar_count_cmp_eq0000_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<5> (fsynt0/Mcompar_count_cmp_eq0000_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<6> (fsynt0/Mcompar_count_cmp_eq0000_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<7> (fsynt0/Mcompar_count_cmp_eq0000_cy<7>)
+     MUXCY:CI->O          17   0.459   1.086  fsynt0/Mcompar_count_cmp_eq0000_cy<8> (fsynt0/Mcompar_count_cmp_eq0000_cy<8>)
+     LUT3:I2->O            1   0.704   0.000  fsynt0/Mcount_count_lut<0> (fsynt0/Mcount_count_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Mcount_count_cy<0> (fsynt0/Mcount_count_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<1> (fsynt0/Mcount_count_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<2> (fsynt0/Mcount_count_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<3> (fsynt0/Mcount_count_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<4> (fsynt0/Mcount_count_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<5> (fsynt0/Mcount_count_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<6> (fsynt0/Mcount_count_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<7> (fsynt0/Mcount_count_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<8> (fsynt0/Mcount_count_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<9> (fsynt0/Mcount_count_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<10> (fsynt0/Mcount_count_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<11> (fsynt0/Mcount_count_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<12> (fsynt0/Mcount_count_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<13> (fsynt0/Mcount_count_cy<13>)
+     MUXCY:CI->O           0   0.059   0.000  fsynt0/Mcount_count_cy<14> (fsynt0/Mcount_count_cy<14>)
+     XORCY:CI->O           1   0.804   0.000  fsynt0/Mcount_count_xor<15> (fsynt0/Mcount_count15)
+     FDC:D                     0.308          fsynt0/count_15
+    ----------------------------------------
+    Total                      7.389ns (5.737ns logic, 1.652ns route)
+                                       (77.6% logic, 22.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 102264 / 17
+-------------------------------------------------------------------------
+Offset:              11.867ns (Levels of Logic = 38)
+  Source:            sw<2> (PAD)
+  Destination:       fsynt0/count_15 (FF)
+  Destination Clock: clk rising
+
+  Data Path: sw<2> to fsynt0/count_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            31   1.218   1.437  sw_2_IBUF (sw_2_IBUF)
+     LUT4:I0->O            1   0.704   0.000  fsynt0/Mrom_count_limit15 (fsynt0/Mrom_count_limit)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Msub__sub0000_cy<0> (fsynt0/Msub__sub0000_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<1> (fsynt0/Msub__sub0000_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<2> (fsynt0/Msub__sub0000_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<3> (fsynt0/Msub__sub0000_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<4> (fsynt0/Msub__sub0000_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<5> (fsynt0/Msub__sub0000_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<6> (fsynt0/Msub__sub0000_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<7> (fsynt0/Msub__sub0000_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<8> (fsynt0/Msub__sub0000_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<9> (fsynt0/Msub__sub0000_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<10> (fsynt0/Msub__sub0000_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<11> (fsynt0/Msub__sub0000_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<12> (fsynt0/Msub__sub0000_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<13> (fsynt0/Msub__sub0000_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Msub__sub0000_cy<14> (fsynt0/Msub__sub0000_cy<14>)
+     XORCY:CI->O           1   0.804   0.595  fsynt0/Msub__sub0000_xor<15> (fsynt0/_sub0000<15>)
+     LUT4:I0->O            1   0.704   0.000  fsynt0/Mcompar_count_cmp_eq0000_lut<7> (fsynt0/Mcompar_count_cmp_eq0000_lut<7>)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Mcompar_count_cmp_eq0000_cy<7> (fsynt0/Mcompar_count_cmp_eq0000_cy<7>)
+     MUXCY:CI->O          17   0.459   1.086  fsynt0/Mcompar_count_cmp_eq0000_cy<8> (fsynt0/Mcompar_count_cmp_eq0000_cy<8>)
+     LUT3:I2->O            1   0.704   0.000  fsynt0/Mcount_count_lut<0> (fsynt0/Mcount_count_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Mcount_count_cy<0> (fsynt0/Mcount_count_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<1> (fsynt0/Mcount_count_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<2> (fsynt0/Mcount_count_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<3> (fsynt0/Mcount_count_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<4> (fsynt0/Mcount_count_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<5> (fsynt0/Mcount_count_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<6> (fsynt0/Mcount_count_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<7> (fsynt0/Mcount_count_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<8> (fsynt0/Mcount_count_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<9> (fsynt0/Mcount_count_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<10> (fsynt0/Mcount_count_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<11> (fsynt0/Mcount_count_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<12> (fsynt0/Mcount_count_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcount_count_cy<13> (fsynt0/Mcount_count_cy<13>)
+     MUXCY:CI->O           0   0.059   0.000  fsynt0/Mcount_count_cy<14> (fsynt0/Mcount_count_cy<14>)
+     XORCY:CI->O           1   0.804   0.000  fsynt0/Mcount_count_xor<15> (fsynt0/Mcount_count15)
+     FDC:D                     0.308          fsynt0/count_15
+    ----------------------------------------
+    Total                     11.867ns (8.749ns logic, 3.118ns route)
+                                       (73.7% logic, 26.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 1203541962 / 3
+-------------------------------------------------------------------------
+Offset:              44.127ns (Levels of Logic = 48)
+  Source:            fir0/fir_path[0].U/x_out_13 (FF)
+  Destination:       detected (PAD)
+  Source Clock:      clk rising
+
+  Data Path: fir0/fir_path[0].U/x_out_13 to detected
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDCE:C->Q            16   0.591   1.034  fir0/fir_path[0].U/x_out_13 (fir0/fir_path[0].U/x_out_13)
+     INV:I->O              1   0.704   0.000  fir0/fir_path[0].U/Mmult_prod_Madd_lut<2>_INV_0 (fir0/fir_path[0].U/Mmult_prod_Madd_lut<2>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Mmult_prod_Madd_cy<2> (fir0/fir_path[0].U/Mmult_prod_Madd_cy<2>)
+     XORCY:CI->O           1   0.804   0.420  fir0/fir_path[0].U/Mmult_prod_Madd_xor<3> (fir0/fir_path[0].U/Mmult_prod_Madd_15)
+     INV:I->O              0   0.704   0.000  fir0/fir_path[0].U/Mmult_prod_Madd11_lut<4>1_INV_0 (fir0/fir_path[0].U/Mmult_prod_Madd11_lut<4>)
+     XORCY:LI->O           1   0.527   0.595  fir0/fir_path[0].U/Mmult_prod_Madd11_xor<4> (fir0/fir_path[0].U/Mmult_prod_Madd13_lut<15>)
+     LUT1:I0->O            1   0.704   0.000  fir0/fir_path[0].U/Mmult_prod_Madd13_cy<15>_rt (fir0/fir_path[0].U/Mmult_prod_Madd13_cy<15>_rt)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Mmult_prod_Madd13_cy<15> (fir0/fir_path[0].U/Mmult_prod_Madd13_cy<15>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[0].U/Mmult_prod_Madd13_xor<16> (fir0/fir_path[0].U/Mmult_prod_Madd_1613)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[0].U/Mmult_prod_Madd14_lut<16> (fir0/fir_path[0].U/Mmult_prod_Madd14_lut<16>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Mmult_prod_Madd14_cy<16> (fir0/fir_path[0].U/Mmult_prod_Madd14_cy<16>)
+     XORCY:CI->O           1   0.804   0.595  fir0/fir_path[0].U/Mmult_prod_Madd14_xor<17> (fir0/fir_path[0].U/Mmult_prod_Madd_1714)
+     LUT2:I0->O            1   0.704   0.000  fir0/fir_path[0].U/Mmult_prod_Madd15_lut<17> (fir0/fir_path[0].U/Mmult_prod_Madd15_lut<17>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Mmult_prod_Madd15_cy<17> (fir0/fir_path[0].U/Mmult_prod_Madd15_cy<17>)
+     XORCY:CI->O           1   0.804   0.595  fir0/fir_path[0].U/Mmult_prod_Madd15_xor<18> (fir0/fir_path[0].U/prod<18>)
+     LUT2:I0->O            1   0.704   0.000  fir0/fir_path[0].U/Madd_y_out_lut<6> (fir0/fir_path[0].U/Madd_y_out_lut<6>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Madd_y_out_cy<6> (fir0/fir_path[0].U/Madd_y_out_cy<6>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[0].U/Madd_y_out_xor<7> (fir0/y_l<1><7>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[1].U/Madd_y_out_lut<7> (fir0/fir_path[1].U/Madd_y_out_lut<7>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[1].U/Madd_y_out_cy<7> (fir0/fir_path[1].U/Madd_y_out_cy<7>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[1].U/Madd_y_out_xor<8> (fir0/y_l<2><8>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[2].U/Madd_y_out_lut<8> (fir0/fir_path[2].U/Madd_y_out_lut<8>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[2].U/Madd_y_out_cy<8> (fir0/fir_path[2].U/Madd_y_out_cy<8>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[2].U/Madd_y_out_xor<9> (fir0/y_l<3><9>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[3].U/Madd_y_out_lut<9> (fir0/fir_path[3].U/Madd_y_out_lut<9>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[3].U/Madd_y_out_cy<9> (fir0/fir_path[3].U/Madd_y_out_cy<9>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[3].U/Madd_y_out_xor<10> (fir0/y_l<4><10>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[4].U/Madd_y_out_lut<10> (fir0/fir_path[4].U/Madd_y_out_lut<10>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[4].U/Madd_y_out_cy<10> (fir0/fir_path[4].U/Madd_y_out_cy<10>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[4].U/Madd_y_out_xor<11> (fir0/y_l<5><11>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[5].U/Madd_y_out_lut<11> (fir0/fir_path[5].U/Madd_y_out_lut<11>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[5].U/Madd_y_out_cy<11> (fir0/fir_path[5].U/Madd_y_out_cy<11>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[5].U/Madd_y_out_xor<12> (fir0/y_l<6><12>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[6].U/Madd_y_out_lut<12> (fir0/fir_path[6].U/Madd_y_out_lut<12>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[6].U/Madd_y_out_cy<12> (fir0/fir_path[6].U/Madd_y_out_cy<12>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[6].U/Madd_y_out_xor<13> (fir0/y_l<7><13>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[7].U/Madd_y_out_lut<13> (fir0/fir_path[7].U/Madd_y_out_lut<13>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[7].U/Madd_y_out_cy<13> (fir0/fir_path[7].U/Madd_y_out_cy<13>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[7].U/Madd_y_out_xor<14> (fir0/y_l<8><14>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[8].U/Madd_y_out_lut<14> (fir0/fir_path[8].U/Madd_y_out_lut<14>)
+     MUXCY:S->O            0   0.464   0.000  fir0/fir_path[8].U/Madd_y_out_cy<14> (fir0/fir_path[8].U/Madd_y_out_cy<14>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[8].U/Madd_y_out_xor<15> (fir0/y_l<9><15>)
+     LUT2:I1->O            0   0.704   0.000  fir0/fir_path[9].U/Madd_y_out_lut<15> (fir0/fir_path[9].U/Madd_y_out_lut<15>)
+     XORCY:LI->O           4   0.527   0.762  fir0/fir_path[9].U/Madd_y_out_xor<15> (detect0/Mcompar_detected_cmp_le0000_lut<5>)
+     LUT1:I0->O            1   0.704   0.000  detect0/Mcompar_detected_cmp_le0000_cy<4>_rt (detect0/Mcompar_detected_cmp_le0000_cy<4>_rt)
+     MUXCY:S->O            1   0.464   0.000  detect0/Mcompar_detected_cmp_le0000_cy<4> (detect0/Mcompar_detected_cmp_le0000_cy<4>)
+     MUXCY:CI->O           1   0.459   0.424  detect0/Mcompar_detected_cmp_le0000_cy<5> (detect0/detected_cmp_le0000)
+     LUT4:I3->O            1   0.704   0.420  detect0/detected_or0000 (detected_OBUF)
+     OBUF:I->O                 3.272          detected_OBUF (detected)
+    ----------------------------------------
+    Total                     44.127ns (34.292ns logic, 9.835ns route)
+                                       (77.7% logic, 22.3% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 2328077760 / 3
+-------------------------------------------------------------------------
+Delay:               45.151ns (Levels of Logic = 60)
+  Source:            sw<3> (PAD)
+  Destination:       detected (PAD)
+
+  Data Path: sw<3> to detected
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            31   1.218   1.437  sw_3_IBUF (sw_3_IBUF)
+     LUT4:I0->O            1   0.704   0.595  fsynt0/Mrom_count_limit111 (fsynt0/Mrom_count_limit1)
+     LUT2:I0->O            1   0.704   0.000  fsynt0/Mcompar_osc_cmp_le0000_lut<0> (fsynt0/Mcompar_osc_cmp_le0000_lut<0>)
+     MUXCY:S->O            1   0.464   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<0> (fsynt0/Mcompar_osc_cmp_le0000_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<1> (fsynt0/Mcompar_osc_cmp_le0000_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<2> (fsynt0/Mcompar_osc_cmp_le0000_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<3> (fsynt0/Mcompar_osc_cmp_le0000_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<4> (fsynt0/Mcompar_osc_cmp_le0000_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<5> (fsynt0/Mcompar_osc_cmp_le0000_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<6> (fsynt0/Mcompar_osc_cmp_le0000_cy<6>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<7> (fsynt0/Mcompar_osc_cmp_le0000_cy<7>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<8> (fsynt0/Mcompar_osc_cmp_le0000_cy<8>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<9> (fsynt0/Mcompar_osc_cmp_le0000_cy<9>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<10> (fsynt0/Mcompar_osc_cmp_le0000_cy<10>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<11> (fsynt0/Mcompar_osc_cmp_le0000_cy<11>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<12> (fsynt0/Mcompar_osc_cmp_le0000_cy<12>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<13> (fsynt0/Mcompar_osc_cmp_le0000_cy<13>)
+     MUXCY:CI->O           1   0.059   0.000  fsynt0/Mcompar_osc_cmp_le0000_cy<14> (fsynt0/Mcompar_osc_cmp_le0000_cy<14>)
+     MUXCY:CI->O           1   0.459   0.420  fsynt0/Mcompar_osc_cmp_le0000_cy<15> (osc)
+     INV:I->O              7   0.704   0.708  x<13>1_INV_0 (x<13>)
+     MULT18X18SIO:A13->P13    1   4.757   0.499  fir0/Mmult_prod (fir0/prod<13>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[0].U/Madd_y_out_lut<1> (fir0/fir_path[0].U/Madd_y_out_lut<1>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[0].U/Madd_y_out_cy<1> (fir0/fir_path[0].U/Madd_y_out_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  fir0/fir_path[0].U/Madd_y_out_cy<2> (fir0/fir_path[0].U/Madd_y_out_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  fir0/fir_path[0].U/Madd_y_out_cy<3> (fir0/fir_path[0].U/Madd_y_out_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  fir0/fir_path[0].U/Madd_y_out_cy<4> (fir0/fir_path[0].U/Madd_y_out_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  fir0/fir_path[0].U/Madd_y_out_cy<5> (fir0/fir_path[0].U/Madd_y_out_cy<5>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[0].U/Madd_y_out_xor<6> (fir0/y_l<1><6>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[1].U/Madd_y_out_lut<6> (fir0/fir_path[1].U/Madd_y_out_lut<6>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[1].U/Madd_y_out_cy<6> (fir0/fir_path[1].U/Madd_y_out_cy<6>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[1].U/Madd_y_out_xor<7> (fir0/y_l<2><7>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[2].U/Madd_y_out_lut<7> (fir0/fir_path[2].U/Madd_y_out_lut<7>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[2].U/Madd_y_out_cy<7> (fir0/fir_path[2].U/Madd_y_out_cy<7>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[2].U/Madd_y_out_xor<8> (fir0/y_l<3><8>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[3].U/Madd_y_out_lut<8> (fir0/fir_path[3].U/Madd_y_out_lut<8>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[3].U/Madd_y_out_cy<8> (fir0/fir_path[3].U/Madd_y_out_cy<8>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[3].U/Madd_y_out_xor<9> (fir0/y_l<4><9>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[4].U/Madd_y_out_lut<9> (fir0/fir_path[4].U/Madd_y_out_lut<9>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[4].U/Madd_y_out_cy<9> (fir0/fir_path[4].U/Madd_y_out_cy<9>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[4].U/Madd_y_out_xor<10> (fir0/y_l<5><10>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[5].U/Madd_y_out_lut<10> (fir0/fir_path[5].U/Madd_y_out_lut<10>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[5].U/Madd_y_out_cy<10> (fir0/fir_path[5].U/Madd_y_out_cy<10>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[5].U/Madd_y_out_xor<11> (fir0/y_l<6><11>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[6].U/Madd_y_out_lut<11> (fir0/fir_path[6].U/Madd_y_out_lut<11>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[6].U/Madd_y_out_cy<11> (fir0/fir_path[6].U/Madd_y_out_cy<11>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[6].U/Madd_y_out_xor<12> (fir0/y_l<7><12>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[7].U/Madd_y_out_lut<12> (fir0/fir_path[7].U/Madd_y_out_lut<12>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[7].U/Madd_y_out_cy<12> (fir0/fir_path[7].U/Madd_y_out_cy<12>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[7].U/Madd_y_out_xor<13> (fir0/y_l<8><13>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[8].U/Madd_y_out_lut<13> (fir0/fir_path[8].U/Madd_y_out_lut<13>)
+     MUXCY:S->O            1   0.464   0.000  fir0/fir_path[8].U/Madd_y_out_cy<13> (fir0/fir_path[8].U/Madd_y_out_cy<13>)
+     XORCY:CI->O           1   0.804   0.499  fir0/fir_path[8].U/Madd_y_out_xor<14> (fir0/y_l<9><14>)
+     LUT2:I1->O            1   0.704   0.000  fir0/fir_path[9].U/Madd_y_out_lut<14> (fir0/fir_path[9].U/Madd_y_out_lut<14>)
+     MUXCY:S->O            0   0.464   0.000  fir0/fir_path[9].U/Madd_y_out_cy<14> (fir0/fir_path[9].U/Madd_y_out_cy<14>)
+     XORCY:CI->O           4   0.804   0.762  fir0/fir_path[9].U/Madd_y_out_xor<15> (detect0/Mcompar_detected_cmp_le0000_lut<5>)
+     LUT1:I0->O            1   0.704   0.000  detect0/Mcompar_detected_cmp_le0000_cy<4>_rt (detect0/Mcompar_detected_cmp_le0000_cy<4>_rt)
+     MUXCY:S->O            1   0.464   0.000  detect0/Mcompar_detected_cmp_le0000_cy<4> (detect0/Mcompar_detected_cmp_le0000_cy<4>)
+     MUXCY:CI->O           1   0.459   0.424  detect0/Mcompar_detected_cmp_le0000_cy<5> (detect0/detected_cmp_le0000)
+     LUT4:I3->O            1   0.704   0.420  detect0/detected_or0000 (detected_OBUF)
+     OBUF:I->O                 3.272          detected_OBUF (detected)
+    ----------------------------------------
+    Total                     45.151ns (35.395ns logic, 9.756ns route)
+                                       (78.4% logic, 21.6% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 5.57 secs
+ 
+--> 
+
+
+Total memory usage is 553624 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :  247 (   0 filtered)
+Number of infos    :   11 (   0 filtered)
+

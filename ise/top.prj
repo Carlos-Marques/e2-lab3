@@ -1,0 +1,5 @@
+verilog work "fir_tap.v"
+verilog work "freq_synt.v"
+verilog work "fir_path.v"
+verilog work "detector.v"
+verilog work "top.v"
